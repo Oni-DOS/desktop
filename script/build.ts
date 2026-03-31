@@ -184,7 +184,10 @@ function packageApp() {
     arch: toPackageArch(process.env.TARGET_ARCH),
     asar: false, // TODO: Probably wanna enable this down the road.
     out: getDistRoot(),
-    icon: join(iconPath, 'icon-logo'),
+    icon:
+      process.platform === 'linux'
+        ? join(projectRoot, 'app', 'static', 'linux', 'icon-logo.png')
+        : join(iconPath, 'icon-logo'),
     extraResource: [assetsCarPath],
     dir: outRoot,
     overwrite: true,
@@ -442,7 +445,7 @@ function copyDependencies() {
     { recursive: true, verbatimSymlinks: true }
   )
 
-  if (process.platform === 'darwin') {
+  if (process.platform === 'linux' || process.platform === 'darwin') {
     console.log('  Copying app-path binary…')
     const appPathMain = path.resolve(outRoot, 'main')
     rmSync(appPathMain, { recursive: true, force: true })

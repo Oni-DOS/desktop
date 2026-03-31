@@ -26,7 +26,7 @@ export function getExecutableName() {
   if (process.platform === 'win32') {
     return `${getWindowsIdentifierName()}${suffix}`
   } else if (process.platform === 'linux') {
-    return 'desktop'
+    return 'github-desktop'
   } else {
     return productName
   }
@@ -38,6 +38,16 @@ export function getOSXZipName() {
 
 export function getOSXZipPath() {
   return Path.join(getDistPath(), '..', getOSXZipName())
+}
+
+export function getLinuxDebName() {
+  const architecture = getDistArchitecture()
+  const debArch = architecture === 'x64' ? 'amd64' : 'arm64'
+  return `${getExecutableName()}-${version}-${debArch}.deb`
+}
+
+export function getLinuxDebPath() {
+  return Path.join(getDistPath(), '..', getLinuxDebName())
 }
 
 export function getWindowsInstallerName() {

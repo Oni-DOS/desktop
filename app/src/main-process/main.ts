@@ -113,6 +113,8 @@ if (__DARWIN__) {
   possibleProtocols.add('github-mac')
 } else if (__WIN32__) {
   possibleProtocols.add('github-windows')
+} else if (__LINUX__) {
+  possibleProtocols.add('github-linux')
 }
 
 // On Windows, in order to get notifications properly working for dev builds,
@@ -277,6 +279,25 @@ async function handleCommandLineArguments(argv: string[]) {
     // If --protocol-launcher is present we always want to bail and not
     // risk a smuggled cli switch
     return
+  }
+
+  if (__LINUX__) {
+    const prefixes = Array.from(possibleProtocols, p => `${p}://`)
+    const matchingUrl = argv.find(arg => {
+      if (prefixes.some(p => arg.startsWith(p))) {
+        try {
+          new URL(arg)
+          return true
+        } catch (e) {
+          log.error(`Unable to parse argument as URL: ${arg}`)
+        }
+      }
+      return false
+    })
+
+    if (matchingUrl) {
+      handleAppURL(matchingUrl)
+    }
   }
 
   if (typeof args['cli-open'] === 'string') {

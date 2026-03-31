@@ -17,6 +17,7 @@ import {
   getDistRoot,
   getDistArchitecture,
   getIconDirectory,
+  getLinuxDebPath,
 } from './dist-info'
 import { isGitHubActions } from './build-platforms'
 import { existsSync, rmSync, writeFileSync } from 'fs'
@@ -39,6 +40,8 @@ if (process.platform === 'darwin') {
   packageOSX()
 } else if (process.platform === 'win32') {
   packageWindows()
+} else if (process.platform === 'linux') {
+  packageLinux()
 } else {
   console.error(`I don't know how to package for ${process.platform} :(`)
   process.exit(1)
@@ -147,6 +150,46 @@ function packageWindows() {
     })
     .catch(e => {
       console.error(`Error packaging: ${e}`)
+      process.exit(1)
+    })
+}
+
+function packageLinux() {
+  const debInstaller = require('electron-installer-debian')
+
+  const options = {
+    src: distPath,
+    dest: outputDir,
+    arch: getDistArchitecture() === 'x64' ? 'amd64' : 'arm64',
+    description: 'Simple collaboration from your desktop',
+    productDescription:
+      'GitHub Desktop is an open source Electron-based GitHub app.',
+    section: 'devel',
+    priority: 'optional',
+    categories: ['Development'],
+    package: 'github-desktop',
+    icon: join(__dirname, '..', 'app', 'static', 'linux', 'icon-logo.png'),
+    scripts: {
+      postinst: join(
+        __dirname,
+        '..',
+        'script',
+        'resources',
+        'linux',
+        'postinst.sh'
+      ),
+      prerm: join(__dirname, '..', 'script', 'resources', 'linux', 'prerm.sh'),
+    },
+    mimeType: ['x-scheme-handler/x-github-desktop-auth'],
+    maintainer: 'GitHub Desktop Team <opensource+desktop@github.com>',
+    homepage: 'https://desktop.github.com/',
+  }
+
+  console.log('Packaging for Linux…')
+  return debInstaller(options)
+    .then(() => console.log(`Debian package created in ${outputDir}`))
+    .catch((err: any) => {
+      console.error(`Error packaging Linux: ${err}`)
       process.exit(1)
     })
 }
