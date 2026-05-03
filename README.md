@@ -24,8 +24,10 @@ Download the official installer for your operating system:
  - [macOS (Apple silicon)](https://central.github.com/deployments/desktop/desktop/latest/darwin-arm64)
  - [Windows](https://central.github.com/deployments/desktop/desktop/latest/win32)
  - [Windows machine-wide install](https://central.github.com/deployments/desktop/desktop/latest/win32?format=msi)
+ - [Linux (Debian/Ubuntu)](https://github.com/Oni-DOS/desktop/releases)
+ - [Linux (AppImage/RPM)](https://github.com/Oni-DOS/desktop/releases)
 
-Linux is not officially supported; however, you can find installers created for Linux from a fork of GitHub Desktop in the [Community Releases](https://github.com/desktop/desktop#community-releases) section.
+Linux is supported in this fork with full compatibility for Kubuntu and other major distributions.
 
 ### Beta Channel
 
@@ -49,9 +51,7 @@ install GitHub Desktop:
  - Windows users can install using [winget](https://docs.microsoft.com/en-us/windows/package-manager/winget/) `c:\> winget install github-desktop` or [Chocolatey](https://chocolatey.org/) `c:\> choco install github-desktop`
  - macOS users can install using [Homebrew](https://brew.sh/) package manager:
       `$ brew install --cask github`
-
-Installers for various Linux distributions can be found on the
-[`shiftkey/desktop`](https://github.com/shiftkey/desktop) fork.
+ - Linux users can find packages for various distributions on the [Releases](https://github.com/Oni-DOS/desktop/releases) page.
 
 ## Is GitHub Desktop right for me? What are the primary areas of focus?
 

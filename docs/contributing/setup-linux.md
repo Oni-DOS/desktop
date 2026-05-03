@@ -2,7 +2,7 @@
 
 You will need to install these tools on your machine:
 
- - Node.js
+ - Node.js (v24 or later)
  - Yarn
  - Python 3
  - Electron dependencies
@@ -13,7 +13,7 @@ The NodeJS project has instructions for installing across a variety of
 distributions and package managers.
 
 Find your distribution on [this list](https://nodejs.org/en/download/package-manager/)
-and follow the instructions to install the version you require.
+and follow the instructions to install the version you require. For this project, **Node.js v24** is required.
 
 Ensure that you also choose the option for building native Node modules, as
 those are used in some dependencies used in GitHub Desktop.
@@ -55,7 +55,7 @@ examples of distributions we've tested.
 $ sudo dnf install -y libsecret-devel libXScrnSaver
 ```
 
-### Ubuntu 14.04 and later
+### Ubuntu 14.04 and later (including Kubuntu)
 
 ```shellsession
 $ sudo apt install libsecret-1-dev libgconf-2-4
