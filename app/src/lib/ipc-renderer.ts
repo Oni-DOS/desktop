@@ -11,7 +11,7 @@ export function invoke<T extends keyof RequestResponseChannels>(
   channel: T,
   ...args: Parameters<RequestResponseChannels[T]>
 ): ReturnType<RequestResponseChannels[T]> {
-  return ipcRenderer.invoke(channel, ...args) as any
+  return ipcRenderer.invoke(channel, ...(args as any)) as any
 }
 
 /**
@@ -22,7 +22,7 @@ export function send<T extends keyof RequestChannels>(
   channel: T,
   ...args: Parameters<RequestChannels[T]>
 ): void {
-  return ipcRenderer.send(channel, ...args) as any
+  return ipcRenderer.send(channel, ...(args as any)) as any
 }
 
 /**
@@ -34,7 +34,7 @@ export function sendSync<T extends keyof RequestChannels>(
   ...args: Parameters<RequestChannels[T]>
 ): void {
   // eslint-disable-next-line no-sync
-  return ipcRenderer.sendSync(channel, ...args) as any
+  return ipcRenderer.sendSync(channel, ...(args as any)) as any
 }
 
 /**

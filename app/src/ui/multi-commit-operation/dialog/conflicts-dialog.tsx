@@ -47,6 +47,7 @@ interface IConflictsDialogState {
   readonly isCommitting: boolean
   readonly isAborting: boolean
   readonly isFileResolutionOptionsMenuOpen: boolean
+  readonly countResolved: number | null
 }
 
 /**
@@ -58,15 +59,13 @@ export class ConflictsDialog extends React.Component<
   IConflictsDialogProps,
   IConflictsDialogState
 > {
-  /** Tracks whether we've ever seen resolved files, for the "undone" banner */
-  private hasSeenResolvedFiles = false
-
   public constructor(props: IConflictsDialogProps) {
     super(props)
     this.state = {
       isCommitting: false,
       isAborting: false,
       isFileResolutionOptionsMenuOpen: false,
+      countResolved: null,
     }
   }
 
@@ -97,6 +96,19 @@ export class ConflictsDialog extends React.Component<
 
     if (resolvedConflicts.length > 0) {
       someConflictsHaveBeenResolved()
+    }
+  }
+
+  public componentDidUpdate(): void {
+    const { workingDirectory, manualResolutions } = this.props
+
+    const resolvedConflicts = getResolvedFiles(
+      workingDirectory,
+      manualResolutions
+    )
+
+    if (resolvedConflicts.length !== (this.state.countResolved ?? 0)) {
+      this.setState({ countResolved: resolvedConflicts.length })
     }
   }
 
@@ -184,21 +196,14 @@ export class ConflictsDialog extends React.Component<
   /**
    * Renders the banner based on count of resolved files.
    *
-   * Always shows the resolved count when there are resolved files. If the
-   * count drops to 0 after having been non-zero, shows the "undone" banner.
+   * If the count of resolved files is null, then the banner is
+   * not rendered as no conflicts have been resolved, yet. If the count of resolved
+   * files is 0, then there have been conflicts resolved, but they have been
+   * undone, we show an undone banner.
    */
   public renderBanner(conflictedFilesCount: number) {
-    const { workingDirectory, manualResolutions } = this.props
-    const countResolved = getResolvedFiles(
-      workingDirectory,
-      manualResolutions
-    ).length
-
-    if (countResolved > 0) {
-      this.hasSeenResolvedFiles = true
-    }
-
-    if (countResolved === 0 && !this.hasSeenResolvedFiles) {
+    const { countResolved } = this.state
+    if (countResolved === null) {
       return
     }
 

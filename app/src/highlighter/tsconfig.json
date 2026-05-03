@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "node10",
+    "ignoreDeprecations": "5.0",
     "target": "ES2021",
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
@@ -11,8 +12,9 @@
     "sourceMap": true,
     "strict": true,
     "outDir": "../../../out",
+    "rootDir": "..",
     "lib": ["scripthost", "webworker", "es2021"],
-    "types": []
+    "types": ["node"]
   },
   "compileOnSave": false
 }

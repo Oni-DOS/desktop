@@ -2,13 +2,14 @@
   "name": "desktop-trampoline",
   "version": "0.9.12",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "bin": {
     "desktop-trampoline": "build/Release/desktop-trampoline"
   },
   "scripts": {
     "build": "tsc",
-    "install": "node-gyp rebuild && tsc",
+    "install": "node-gyp rebuild",
     "lint": "prettier -c **/*.js **/*.md",
     "lint:fix": "prettier --write **/*.js **/*.md",
     "test": "node script/test.mjs"

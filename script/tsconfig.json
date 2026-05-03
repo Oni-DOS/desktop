@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "moduleResolution": "node",
+    "moduleResolution": "node10",
+    "ignoreDeprecations": "5.0",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "importHelpers": true,
-    "target": "ES2021",
+    "target": "ES2022",
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "noImplicitReturns": true,

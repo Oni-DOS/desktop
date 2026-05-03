@@ -53,6 +53,9 @@ import parseCommandLineArgs from 'minimist'
 import { CLIAction } from '../lib/cli-action'
 
 app.setAppLogsPath()
+if (__LINUX__) {
+  app.commandLine.appendSwitch('ozone-platform-hint', 'auto')
+}
 enableSourceMaps()
 
 let mainWindow: AppWindow | null = null
@@ -103,11 +106,8 @@ function getExtraErrorContext(): Record<string, string> {
 const protocolLauncherArg = '--protocol-launcher'
 
 const possibleProtocols = new Set(['x-github-client'])
-if (__DEV_SECRETS__) {
-  possibleProtocols.add('x-github-desktop-dev-auth')
-} else {
-  possibleProtocols.add('x-github-desktop-auth')
-}
+possibleProtocols.add('x-github-desktop-auth')
+possibleProtocols.add('x-github-desktop-dev-auth')
 // Also support Desktop Classic's protocols.
 if (__DARWIN__) {
   possibleProtocols.add('github-mac')
@@ -282,9 +282,15 @@ async function handleCommandLineArguments(argv: string[]) {
   }
 
   if (__LINUX__) {
+    log.info(`Received arguments on Linux: ${JSON.stringify(argv)}`)
     const prefixes = Array.from(possibleProtocols, p => `${p}://`)
+    const shortPrefixes = Array.from(possibleProtocols, p => `${p}:`)
+    log.info(`Checking for prefixes on Linux: ${JSON.stringify(prefixes)} and ${JSON.stringify(shortPrefixes)}`)
     const matchingUrl = argv.find(arg => {
-      if (prefixes.some(p => arg.startsWith(p))) {
+      if (
+        prefixes.some(p => arg.startsWith(p)) ||
+        shortPrefixes.some(p => arg.startsWith(p))
+      ) {
         try {
           new URL(arg)
           return true

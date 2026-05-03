@@ -17,7 +17,6 @@ import {
   getDistRoot,
   getDistArchitecture,
   getIconDirectory,
-  getLinuxDebPath,
 } from './dist-info'
 import { isGitHubActions } from './build-platforms'
 import { existsSync, rmSync, writeFileSync } from 'fs'
@@ -166,8 +165,10 @@ function packageLinux() {
       'GitHub Desktop is an open source Electron-based GitHub app.',
     section: 'devel',
     priority: 'optional',
-    categories: ['Development'],
+    categories: ['Development', 'RevisionControl', 'Git'],
     package: 'github-desktop',
+    name: 'github-desktop',
+    bin: 'github-desktop',
     icon: join(__dirname, '..', 'app', 'static', 'linux', 'icon-logo.png'),
     scripts: {
       postinst: join(
@@ -180,9 +181,45 @@ function packageLinux() {
       ),
       prerm: join(__dirname, '..', 'script', 'resources', 'linux', 'prerm.sh'),
     },
-    mimeType: ['x-scheme-handler/x-github-desktop-auth'],
+    mimeType: [
+      'x-scheme-handler/x-github-desktop-auth',
+      'x-scheme-handler/x-github-desktop-dev-auth',
+      'x-scheme-handler/x-github-client',
+      'x-scheme-handler/github-linux',
+    ],
     maintainer: 'GitHub Desktop Team <opensource+desktop@github.com>',
     homepage: 'https://desktop.github.com/',
+    depends: [
+      'libsecret-1-0',
+      'libcurl4',
+      'libnss3',
+      'libatk1.0-0',
+      'libatk-bridge2.0-0',
+      'libcups2',
+      'libgtk-3-0',
+      'libgbm1',
+      'libasound2',
+      'libxshmfence1',
+      'libx11-xcb1',
+    ],
+    recommends: [
+      'gnome-keyring | kwallet-secret-service',
+      'libappindicator3-1',
+      'libdbusmenu-glib4',
+      'libdbusmenu-gtk3-4',
+    ],
+    desktop: {
+      Name: productName,
+      GenericName: 'Git Client',
+      Comment: 'Simple collaboration from your desktop',
+      Categories: 'Development;RevisionControl;Git;',
+      Keywords: 'github;git;desktop;',
+      StartupWMClass: 'github-desktop',
+      Exec: 'github-desktop %u',
+      MimeType:
+        'x-scheme-handler/x-github-desktop-auth;x-scheme-handler/x-github-desktop-dev-auth;x-scheme-handler/x-github-client;x-scheme-handler/github-linux;',
+      Terminal: false,
+    },
   }
 
   console.log('Packaging for Linux…')

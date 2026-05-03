@@ -120,17 +120,17 @@ export class SandboxedMarkdown extends React.PureComponent<
   public renderMarkdown = async () => {
     const { markdown } = this.props
 
-    const body = DOMPurify.sanitize(
-      marked(markdown, {
-        // https://marked.js.org/using_advanced  If true, use approved GitHub
-        // Flavored Markdown (GFM) specification.
-        gfm: true,
-        // https://marked.js.org/using_advanced, If true, add <br> on a single
-        // line break (copies GitHub behavior on comments, but not on rendered
-        // markdown files). Requires gfm be true.
-        breaks: true,
-      })
-    )
+    const parsed = await marked.parse(markdown, {
+      // https://marked.js.org/using_advanced  If true, use approved GitHub
+      // Flavored Markdown (GFM) specification.
+      gfm: true,
+      // https://marked.js.org/using_advanced, If true, add <br> on a single
+      // line break (copies GitHub behavior on comments, but not on rendered
+      // markdown files). Requires gfm be true.
+      breaks: true,
+    })
+
+    const body = DOMPurify.sanitize(parsed)
 
     const styleSheet = await this.getInlineStyleSheet()
 

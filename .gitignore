@@ -20,3 +20,12 @@ junit*.xml
 *.swp
 tslint-rules/
 playwright-videos/
+
+# Local Node installation
+node-v24.11.1-linux-x64/
+*.tar.xz
+
+# Vendor build artifacts
+vendor/windows-argv-parser/dist/
+vendor/desktop-notifications/dist/
+vendor/desktop-trampoline/dist/
