@@ -1,3 +1,6 @@
+import type { ModelInfo } from '@github/copilot-sdk'
+import type { CopilotModelSelections } from './stores/copilot-store'
+import type { IBYOKProvider } from './copilot/byok'
 import { Account } from '../models/account'
 import { CommitIdentity } from '../models/commit-identity'
 import { IDiff, ImageDiffType } from '../models/diff'
@@ -372,6 +375,9 @@ export interface IAppState {
   /** Whether or not the user will see check marks indicating a line is included in the check in the diff */
   readonly showDiffCheckMarks: boolean
 
+  /** Whether the user prefers absolute dates over relative time in lists */
+  readonly preferAbsoluteDates: boolean
+
   /**
    * Cached repo rulesets. Used to prevent repeatedly querying the same
    * rulesets to check their bypass status.
@@ -388,6 +394,27 @@ export interface IAppState {
 
   /** Whether the changes filter is shown */
   readonly showChangesFilter: boolean
+
+  /**
+   * Per-feature Copilot model selections. An absent key means the default
+   * model will be used for that feature.
+   */
+  readonly selectedCopilotModels: CopilotModelSelections
+
+  /**
+   * The list of available Copilot models fetched from the SDK.
+   * Null when the list has not been fetched yet.
+   */
+  readonly copilotModels: ReadonlyArray<ModelInfo> | null
+
+  /** Whether Copilot is available (i.e. a GitHub.com account is signed in). */
+  readonly copilotAvailable: boolean
+
+  /**
+   * The list of user-configured Copilot model providers (BYOK). Empty when
+   * the user has not configured any custom providers.
+   */
+  readonly byokProviders: ReadonlyArray<IBYOKProvider>
 }
 
 export enum FoldoutType {

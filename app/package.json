@@ -30,6 +30,7 @@
     "codemirror-mode-luau": "^1.0.9",
     "codemirror-mode-zig": "^1.0.15",
     "compare-versions": "^6.1.1",
+    "date-fns": "^4.1.0",
     "deep-equal": "^2.2.3",
     "desktop-notifications": "file:../vendor/desktop-notifications",
     "desktop-trampoline": "file:../vendor/desktop-trampoline",
