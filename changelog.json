@@ -1,5 +1,12 @@
 {
   "releases": {
+    "3.6.0": [
+      "[New] Full Linux compatibility support for distributions like Kubuntu",
+      "[Improved] Upgrade to Node.js v24.11.1",
+      "[Improved] Update dependencies to latest versions for security and performance",
+      "[Fixed] Resolve numerous TypeScript compilation errors and library API incompatibilities",
+      "[Added] Native GitHub Actions support for Linux builds and E2E testing"
+    ],
     "3.5.7-beta3": [
       "[Added] Rename branch dialog now validates branch names against repository rulesets - #21822"
     ],
