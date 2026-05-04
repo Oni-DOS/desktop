@@ -1,6 +1,5 @@
 /* eslint-disable no-sync */
 
-import * as cp from 'child_process'
 import * as path from 'path'
 import { getProductName } from '../app/package-info'
 import {
