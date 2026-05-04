@@ -29,7 +29,7 @@ const rendererConfig = merge({}, common.renderer, config, {
   plugins: [
     // Necessary to be able to use MiniCssExtractPlugin as a loader.
     new MiniCssExtractPlugin({ filename: 'renderer.css' }),
-    new BundleAnalyzerPlugin({
+    new (BundleAnalyzerPlugin as any)({
       // this generates the static HTML file to view afterwards, rather
       // than disrupting the user
       analyzerMode: 'static',
