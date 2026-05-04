@@ -80,7 +80,7 @@ function parseChannel(arg: string): Channel {
  * @param nextVersion version for the next release
  * @param entries release notes for the next release
  */
-function printInstructions(nextVersion: string, entries: Array<string>) {
+async function printInstructions(nextVersion: string, entries: Array<string>) {
   const baseSteps = [
     'Revise the release notes according to https://github.com/desktop/desktop/blob/development/docs/process/writing-release-notes.md',
     'Lint them with: yarn draft-release:format',
@@ -203,21 +203,21 @@ export async function run(args: ReadonlyArray<string>): Promise<void> {
       })
       writeFileSync(changelogPath, formattedChangelog)
       console.log('Added!')
-      printInstructions(nextVersion, [])
+      await printInstructions(nextVersion, [])
     } catch (e) {
       console.warn(
         `Writing the changelog failed 😿\n(${
           e instanceof Error ? e.message : e
         })`
       )
-      printInstructions(nextVersion, newEntries)
+      await printInstructions(nextVersion, newEntries)
     }
   } else {
     console.log(
       `Looks like there are already release notes for ${nextVersion} in changelog.json.`
     )
 
-    printInstructions(nextVersion, newEntries)
+    await printInstructions(nextVersion, newEntries)
   }
 }
 

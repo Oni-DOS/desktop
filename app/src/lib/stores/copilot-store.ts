@@ -27,7 +27,6 @@ import {
 import { PullRequest } from '../../models/pull-request'
 import * as ipcRenderer from '../ipc-renderer'
 import { join } from 'path'
-import { pathToFileURL } from 'url'
 import { randomBytes } from 'crypto'
 import { BaseStore } from './base-store'
 import { IRepoRulesMetadataRule } from '../../models/repo-rules'
@@ -517,7 +516,7 @@ export class CopilotStore extends BaseStore {
         },
         availableTools: [],
         onPermissionRequest: async () => ({
-          kind: 'denied-interactively-by-user',
+          kind: 'no-result',
         }),
       })
 
@@ -688,7 +687,7 @@ export class CopilotStore extends BaseStore {
             content: ConflictResolutionSystemPrompt,
           },
           onPermissionRequest: async () => ({
-            kind: 'denied-interactively-by-user',
+            kind: 'no-result',
           }),
         })
 
@@ -804,7 +803,7 @@ export class CopilotStore extends BaseStore {
     const client = await this.createClient()
     try {
       const models = await client.listModels()
-      return models.data.models
+      return models
     } catch (e) {
       log.warn('CopilotStore: Failed to fetch models', e)
       return null
