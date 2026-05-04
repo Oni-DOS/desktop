@@ -62,6 +62,20 @@ findYarnVersion(path => {
     process.exit(result.status || 1)
   }
 
+  const vendors = [
+    'vendor/desktop-notifications',
+    'vendor/desktop-trampoline',
+    'vendor/windows-argv-parser',
+  ]
+
+  for (const vendor of vendors) {
+    console.log(`Building ${vendor}…`)
+    result = spawnSync('node', [path, '--cwd', vendor, 'build'], options)
+    if (result.status !== 0) {
+      process.exit(result.status || 1)
+    }
+  }
+
   result = spawnSync('node', [path, 'compile:script'], options)
 
   if (result.status !== 0) {
