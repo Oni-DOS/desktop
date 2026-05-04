@@ -1,3 +1,4 @@
+// @ts-ignore
 import { NotificationCallback } from 'desktop-notifications/dist/notification-callback'
 import { Commit, shortenSHA } from '../../models/commit'
 import { GitHubRepository } from '../../models/github-repository'
@@ -109,7 +110,8 @@ export class NotificationsStore {
     this.handleAliveEvent(e, false)
 
   public onNotificationEventReceived: NotificationCallback<DesktopAliveEvent> =
-    async (event, id, userInfo) => this.handleAliveEvent(userInfo, true)
+    async (event: string, id: string, userInfo: DesktopAliveEvent) =>
+      this.handleAliveEvent(userInfo, true)
 
   public simulateAliveEvent(event: DesktopAliveEvent) {
     if (__DEV__ || __RELEASE_CHANNEL__ === 'test') {

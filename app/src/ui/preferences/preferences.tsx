@@ -374,10 +374,12 @@ export class Preferences extends React.Component<
               <Octicon className="icon" symbol={octicons.paintbrush} />
               Appearance
             </span>
-            <span id={this.getTabId(PreferencesTab.Notifications)}>
-              <Octicon className="icon" symbol={octicons.bell} />
-              Notifications
-            </span>
+            {!__LINUX__ && (
+              <span id={this.getTabId(PreferencesTab.Notifications)}>
+                <Octicon className="icon" symbol={octicons.bell} />
+                Notifications
+              </span>
+            )}
             <span id={this.getTabId(PreferencesTab.Prompts)}>
               <Octicon className="icon" symbol={octicons.question} />
               Prompts
@@ -598,6 +600,9 @@ export class Preferences extends React.Component<
         )
         break
       case PreferencesTab.Notifications:
+        if (__LINUX__) {
+          return null
+        }
         View = (
           <Notifications
             notificationsEnabled={this.state.notificationsEnabled}

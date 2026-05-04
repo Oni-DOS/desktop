@@ -1,3 +1,4 @@
+// @ts-ignore
 import {
   initializeNotifications,
   onNotificationEvent,
@@ -46,7 +47,7 @@ export function terminateDesktopNotifications() {
 }
 
 export function installNotificationCallback(window: BrowserWindow) {
-  onNotificationEvent<DesktopAliveEvent>((event, id, userInfo) => {
+  onNotificationEvent<DesktopAliveEvent>((event: string, id: string, userInfo: DesktopAliveEvent) => {
     ipcWebContents.send(
       window.webContents,
       'notification-event',

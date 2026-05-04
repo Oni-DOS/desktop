@@ -13,7 +13,9 @@ import { Architecture } from './get-architecture'
 import { EndpointToken } from './endpoint-token'
 import { PathType } from '../ui/lib/app-proxy'
 import { ThemeSource } from '../ui/lib/theme-source'
+// @ts-ignore
 import { DesktopNotificationPermission } from 'desktop-notifications'
+// @ts-ignore
 import { NotificationCallback } from 'desktop-notifications'
 import { DesktopAliveEvent } from './stores/alive-store'
 import { CLIAction } from './cli-action'
