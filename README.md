@@ -1,8 +1,7 @@
-# [GitHub Desktop](https://desktop.github.com)
+# GitHub Desktop for Linux
 
-[GitHub Desktop](https://desktop.github.com/) is an open-source [Electron](https://www.electronjs.org/)-based
-GitHub app. It is written in [TypeScript](https://www.typescriptlang.org) and
-uses [React](https://reactjs.org/).
+This repository is a community-driven fork of [GitHub Desktop](https://desktop.github.com/) dedicated to bringing full Linux compatibility to the application. It is an open-source [Electron](https://www.electronjs.org/)-based
+GitHub app, written in [TypeScript](https://www.typescriptlang.org) and using [React](https://reactjs.org/).
 
 <picture>
   <source
