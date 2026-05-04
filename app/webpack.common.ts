@@ -26,13 +26,13 @@ const commonConfig: webpack.Configuration = {
     rules: [
       {
         test: /\.tsx?$/,
-        include: path.resolve(__dirname, 'src'),
-        use: [
-          {
-            loader: 'ts-loader',
-          },
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'node_modules/desktop-trampoline'),
+          path.resolve(__dirname, 'node_modules/windows-argv-parser'),
         ],
-        exclude: /node_modules/,
+        loader: 'ts-loader',
+        exclude: /node_modules\/(?!desktop-trampoline|windows-argv-parser)/,
       },
       {
         test: /\.node$/,
