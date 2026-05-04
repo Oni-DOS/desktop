@@ -31,7 +31,14 @@ const commonConfig: webpack.Configuration = {
           path.resolve(__dirname, 'node_modules/desktop-trampoline'),
           path.resolve(__dirname, 'node_modules/windows-argv-parser'),
         ],
-        loader: 'ts-loader',
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              allowTsInNodeModules: true,
+            },
+          },
+        ],
         exclude: /node_modules\/(?!desktop-trampoline|windows-argv-parser)/,
       },
       {
@@ -45,6 +52,16 @@ const commonConfig: webpack.Configuration = {
   },
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
+    alias: {
+      'desktop-notifications': path.resolve(
+        __dirname,
+        'src/lib/notifications/desktop-notifications-noop.ts'
+      ),
+      'desktop-notifications/dist/notification-callback': path.resolve(
+        __dirname,
+        'src/lib/notifications/desktop-notifications-noop.ts'
+      ),
+    },
   },
   node: {
     __dirname: false,
