@@ -12,7 +12,7 @@ import { execSync } from 'child_process'
 
 import { writeFileSync } from 'fs'
 import { join } from 'path'
-import { format } from 'prettier'
+import * as prettier from 'prettier'
 import { assertNever, forceUnwrap } from '../../app/src/lib/fatal-error'
 import { sh } from '../sh'
 import { readFile } from 'fs/promises'
@@ -26,10 +26,10 @@ const changelogPath = join(__dirname, '..', '..', 'changelog.json')
  * @param options there's only one option `excludeBetaReleases`,
  *                which is a boolean
  */
-async function getLatestRelease(options: {
+const getLatestRelease = async (options: {
   excludeBetaReleases: boolean
   excludeTestReleases: boolean
-}): Promise<string> {
+}): Promise<string> => {
   let releaseTags = (await sh('git', 'tag'))
     .split('\n')
     .filter(tag => tag.startsWith('release-'))
@@ -51,7 +51,7 @@ async function getLatestRelease(options: {
   return latestTag
 }
 
-async function createReleaseBranch(version: string): Promise<void> {
+const createReleaseBranch = async (version: string): Promise<void> => {
   try {
     const versionBranch = `releases/${version}`
     const currentBranch = (
@@ -80,7 +80,7 @@ function parseChannel(arg: string): Channel {
  * @param nextVersion version for the next release
  * @param entries release notes for the next release
  */
-async function printInstructions(nextVersion: string, entries: Array<string>) {
+const printInstructions = async (nextVersion: string, entries: Array<string>) => {
   const baseSteps = [
     'Revise the release notes according to https://github.com/desktop/desktop/blob/development/docs/process/writing-release-notes.md',
     'Lint them with: yarn draft-release:format',
@@ -93,7 +93,7 @@ async function printInstructions(nextVersion: string, entries: Array<string>) {
     printSteps(baseSteps)
   } else {
     const object = { [nextVersion]: entries.sort() }
-    const formatted = await format(JSON.stringify(object), {
+    const formatted = await prettier.format(JSON.stringify(object), {
       parser: 'json',
     })
     const steps = [
@@ -198,9 +198,12 @@ export async function run(args: ReadonlyArray<string>): Promise<void> {
     )
     try {
       // this might throw
-      const formattedChangelog = await format(JSON.stringify(changelog), {
-        parser: 'json',
-      })
+      const formattedChangelog = await prettier.format(
+        JSON.stringify(changelog),
+        {
+          parser: 'json',
+        }
+      )
       writeFileSync(changelogPath, formattedChangelog)
       console.log('Added!')
       await printInstructions(nextVersion, [])
@@ -242,7 +245,7 @@ interface IChangelog {
   releases: ChangelogReleases
 }
 
-async function getPretext(): Promise<string | null> {
+const getPretext = async (): Promise<string | null> => {
   const pretextPath = join(
     __dirname,
     '..',
