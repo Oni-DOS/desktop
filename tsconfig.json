@@ -19,6 +19,15 @@
     "useUnknownInCatchVariables": false,
     "lib": ["ES2023", "DOM", "DOM.Iterable", "ESNext.Array"],
     "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "desktop-notifications": [
+        "app/src/lib/notifications/desktop-notifications-noop.ts"
+      ],
+      "desktop-notifications/*": [
+        "app/src/lib/notifications/desktop-notifications-noop.ts"
+      ]
+    },
     "skipLibCheck": true
   },
   "include": ["app/**/*.ts", "app/**/*.tsx", "app/**/*.d.tsx"],

@@ -43,7 +43,6 @@ import {
 } from '../lib/get-architecture'
 import { buildSpellCheckMenu } from './menu/build-spell-check-menu'
 import { getMainGUID, saveGUIDFile } from '../lib/get-main-guid'
-// @ts-ignore
 import {
   getNotificationsPermission,
   requestNotificationsPermission,
