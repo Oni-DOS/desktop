@@ -51,7 +51,7 @@ jobs:
     with:
       additional_context:
         '- a log file from the day you experienced the issue (access log files
-        via `Help` > `Show Logs in Finder/Explorer`).'
+        via `Help` > `Show Logs in File Manager`).'
     permissions:
       issues: write
 

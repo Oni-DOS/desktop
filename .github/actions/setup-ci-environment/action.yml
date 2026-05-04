@@ -1,5 +1,5 @@
 name: Setup CI Environment
-description: Set up Python, Node.js, optional ffmpeg, and install dependencies.
+description: Set up Python, Node.js, and install dependencies.
 
 inputs:
   node-version:
@@ -8,10 +8,6 @@ inputs:
   arch:
     description: Target architecture for dependency installation.
     required: true
-  install-ffmpeg:
-    description: Whether to install ffmpeg on Windows.
-    required: false
-    default: 'false'
 
 runs:
   using: composite
@@ -25,11 +21,6 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
         cache: yarn
-
-    - name: Install ffmpeg
-      if: ${{ runner.os == 'Windows' && inputs.install-ffmpeg == 'true' }}
-      shell: bash
-      run: choco install ffmpeg --yes --no-progress
 
     - name: Install and build dependencies
       shell: bash

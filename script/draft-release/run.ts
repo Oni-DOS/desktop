@@ -48,7 +48,7 @@ async function getLatestRelease(options: {
   const sortedTags = semverSort(releaseVersions)
   const latestTag = forceUnwrap(`No tags`, sortedTags.at(-1))
 
-  return latestTag instanceof SemVer ? latestTag.raw : latestTag
+  return typeof latestTag === 'string' ? latestTag : latestTag.raw
 }
 
 async function createReleaseBranch(version: string): Promise<void> {
