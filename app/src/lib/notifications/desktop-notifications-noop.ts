@@ -1,11 +1,22 @@
-export type NotificationCallback = (event: any, id: string, userInfo: any) => void
+export type DesktopNotificationPermission = 'denied' | 'granted' | 'default'
 
-export const initializeNotifications = () => {}
+export type NotificationCallback<T = any> = (
+  event: string,
+  id: string,
+  userInfo: T
+) => void
+
+export const initializeNotifications = (settings?: any) => {}
 export const terminateNotifications = () => {}
-export const showNotification = () => Promise.resolve(null)
-export const getNotificationsPermission = () => Promise.resolve('denied')
-export const requestNotificationsPermission = () => Promise.resolve('denied')
+export const showNotification = (
+  title: string,
+  body: string,
+  userInfo?: any
+) => Promise.resolve(null)
+export const getNotificationsPermission = () =>
+  Promise.resolve('denied' as 'denied' | 'granted' | 'default')
+export const requestNotificationsPermission = () => Promise.resolve(false)
 export const supportsNotifications = () => false
 export const supportsNotificationsPermissionRequest = () => false
 export const getNotificationSettingsUrl = () => null
-export const onNotificationEvent = () => {}
+export const onNotificationEvent = <T = any>(callback: NotificationCallback<T>) => {}

@@ -23,7 +23,6 @@ import { Loading } from '../lib/loading'
 import { getPullRequestReviewStateIcon } from '../notifications/pull-request-review-helpers'
 import { Octicon } from '../octicons'
 import * as octicons from '../octicons/octicons.generated'
-// @ts-ignore
 import {
   getNotificationSettingsUrl,
   getNotificationsPermission,

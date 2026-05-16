@@ -1,4 +1,3 @@
-// @ts-ignore
 import { NotificationCallback } from 'desktop-notifications/dist/notification-callback'
 import { Commit, shortenSHA } from '../../models/commit'
 import { GitHubRepository } from '../../models/github-repository'
